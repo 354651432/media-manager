@@ -179,6 +179,7 @@ class MediaManager extends Extension
                 'download'  => route('media-download', compact('file')),
                 'icon'      => '',
                 'name'      => $file,
+                'basename'  => $this->basename($file),
                 'preview'   => $this->getFilePreview($file),
                 'isDir'     => false,
                 'size'      => $this->getFilesize($file),
@@ -202,6 +203,7 @@ class MediaManager extends Extension
                 'download'  => '',
                 'icon'      => '',
                 'name'      => $dir,
+                'basename'      => $this->basename($dir),
                 'preview'   => str_replace('__path__', $dir, $preview),
                 'isDir'     => true,
                 'size'      => '',
@@ -315,5 +317,10 @@ class MediaManager extends Extension
         $time = filectime($this->getFullPath($file));
 
         return date('Y-m-d H:i:s', $time);
+    }
+
+    public function basename($path)
+    {
+        return preg_replace('/^.+[\\\\\\/]/', '', $path);
     }
 }

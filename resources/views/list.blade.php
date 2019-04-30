@@ -335,7 +335,7 @@ $(function () {
 
                             <div class="file-info">
                                 <a @if(!$item['isDir'])target="_blank"@endif href="{{ $item['link'] }}" class="file-name" title="{{ $item['name'] }}">
-                                    {{ $item['icon'] }} {{ basename($item['name']) }}
+                                    {{ $item['icon'] }} {{ $item['basename'] }}
                                 </a>
                             <span class="file-size">
                               {{ $item['size'] }}&nbsp;
