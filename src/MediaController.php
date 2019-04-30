@@ -9,15 +9,16 @@ use Illuminate\Routing\Controller;
 
 class MediaController extends Controller
 {
+    protected $prefix = '';
+
     public function index(Request $request)
     {
         return Admin::content(function (Content $content) use ($request) {
-            $content->header('制度');
-
             $path = $request->get('path', '/');
             $view = $request->get('view', 'table');
 
-            $manager = new MediaManager($path);
+            $manager = new MediaManager($path, $this->prefix);
+            $content->header($manager->header());
 
             $content->body(view("laravel-admin-media::$view", [
                 'list' => $manager->ls(),
