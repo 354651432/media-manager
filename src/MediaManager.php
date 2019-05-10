@@ -95,11 +95,11 @@ class MediaManager extends Extension
      */
     public function __construct($path = '/', $prefix = '')
     {
-        if ($prefix && str_start($prefix, '/')) {
-            $prefix = '/' . $prefix;
-        }
+        $path = str_start($path, '/');
+        $prefix = str_start($prefix, '/');
 
         $this->path = $prefix . $path;
+
         $this->prefix = $prefix;
 
         $disk = static::config('disk');
@@ -201,7 +201,7 @@ class MediaManager extends Extension
     public function urls()
     {
         return [
-            'path' => $this->path,
+            'path' => $this->path($this->path),
             'index' => route('media-index'),
             'move' => route('media-move'),
             'delete' => route('media-delete'),

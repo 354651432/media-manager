@@ -9,6 +9,8 @@ use Illuminate\Routing\Controller;
 
 class MediaController extends Controller
 {
+    protected $canedit = true;
+
     protected $prefix = '';
 
     public function index(Request $request)
@@ -24,6 +26,7 @@ class MediaController extends Controller
                 'list' => $manager->ls(),
                 'nav' => $manager->navigation(),
                 'url' => $manager->urls(),
+                'canedit' => false,
             ]));
         });
     }
