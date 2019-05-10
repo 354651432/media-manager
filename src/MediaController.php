@@ -26,7 +26,7 @@ class MediaController extends Controller
                 'list' => $manager->ls(),
                 'nav' => $manager->navigation(),
                 'url' => $manager->urls(),
-                'canedit' => false,
+                'canedit' => $this->canedit,
             ]));
         });
     }
