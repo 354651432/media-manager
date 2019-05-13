@@ -155,9 +155,11 @@ class MediaManager extends Extension
 
     public function delete($path)
     {
+
         $paths = is_array($path) ? $path : func_get_args();
 
         foreach ($paths as $path) {
+            $path = $this->prefix . $path;
             $fullPath = $this->getFullPath($path);
 
             if (is_file($fullPath)) {
@@ -217,7 +219,7 @@ class MediaManager extends Extension
         }
 
         $files = array_map(function ($file) {
-            $file = $this->path('/' . $file);
+            $file = $this->path($file);
             return [
                 'download' => route('media-download', compact('file')),
                 'icon' => '',
@@ -246,16 +248,17 @@ class MediaManager extends Extension
         $preview = "<a href=\"$url\"><span class=\"file-icon text-aqua\"><i class=\"fa fa-folder\"></i></span></a>";
 
         $dirs = array_map(function ($dir) use ($preview) {
+            $path = $this->path($dir);
             return [
                 'download' => '',
                 'icon' => '',
                 'name' => $dir,
                 'basename' => $this->basename($dir),
-                'preview' => str_replace('__path__', $dir, $preview),
+                'preview' => str_replace('__path__', $path, $preview),
                 'isDir' => true,
                 'size' => '',
                 'link' => route('media-index',
-                    ['path' => $this->path('/' . trim($dir, '/')), 'view' => request('view')]),
+                    ['path' => $path, 'view' => request('view')]),
                 'url' => $this->storage->url($dir),
                 'time' => $this->getFileChangeTime($dir),
             ];
@@ -266,6 +269,7 @@ class MediaManager extends Extension
 
     private function path($path)
     {
+        $path = str_start($path, '/');
         if (starts_with($path, $this->prefix)) {
             return mb_substr($path, mb_strlen($this->prefix));
         }

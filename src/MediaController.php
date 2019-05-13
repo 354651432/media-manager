@@ -62,7 +62,7 @@ class MediaController extends Controller
     {
         $files = $request->get('files');
 
-        $manager = new MediaManager();
+        $manager = new MediaManager('/', $this->prefix);
 
         try {
             if ($manager->delete($files)) {
