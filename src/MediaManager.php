@@ -217,18 +217,18 @@ class MediaManager extends Extension
         }
 
         $files = array_map(function ($file) {
-            $file = $this->path($file);
+            $file = $this->path('/' . $file);
             return [
                 'download' => route('media-download', compact('file')),
                 'icon' => '',
                 'name' => $file,
                 'basename' => $this->basename($file),
-                'preview' => $this->getFilePreview($file),
+                'preview' => $this->getFilePreview($this->prefix . $file),
                 'isDir' => false,
-                'size' => $this->getFilesize($file),
+                'size' => $this->getFilesize($this->prefix . $file),
                 'link' => route('media-download', compact('file')),
                 'url' => $this->storage->url($file),
-                'time' => $this->getFileChangeTime($file),
+                'time' => $this->getFileChangeTime($this->prefix . $file),
             ];
         }, $files);
 
