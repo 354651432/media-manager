@@ -35,7 +35,7 @@ class MediaController extends Controller
     {
         $file = $request->get('file');
 
-        $manager = new MediaManager($file);
+        $manager = new MediaManager($file, $this->prefix);
 
         return $manager->download();
     }
@@ -45,7 +45,7 @@ class MediaController extends Controller
         $files = $request->file('files');
         $dir = $request->get('dir', '/');
 
-        $manager = new MediaManager($dir);
+        $manager = new MediaManager($dir, $this->prefix);
 
         try {
             if ($manager->upload($files)) {
@@ -84,7 +84,7 @@ class MediaController extends Controller
         $path = $request->get('path');
         $new = $request->get('new');
 
-        $manager = new MediaManager($path);
+        $manager = new MediaManager($path, $this->prefix);
 
         try {
             if ($manager->move($new)) {
@@ -106,7 +106,7 @@ class MediaController extends Controller
         $dir = $request->get('dir');
         $name = $request->get('name');
 
-        $manager = new MediaManager($dir);
+        $manager = new MediaManager($dir, $this->prefix);
 
         try {
             if ($manager->newFolder($name)) {
