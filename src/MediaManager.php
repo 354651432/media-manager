@@ -218,12 +218,12 @@ class MediaManager extends Extension
             $files = $this->skipHide($files);
         }
 
-        $files = array_map(function ($file) {
-            $file = $this->path($file);
+        $files = array_map(function ($srcfile) {
+            $file = $this->path($srcfile);
             return [
                 'download' => route('media-download', compact('file')),
                 'icon' => '',
-                'name' => $file,
+                'name' => $srcfile,
                 'basename' => $this->basename($file),
                 'preview' => $this->getFilePreview($this->prefix . $file),
                 'isDir' => false,
